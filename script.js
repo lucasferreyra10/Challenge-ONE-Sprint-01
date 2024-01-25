@@ -1,58 +1,48 @@
-function encriptarTexto() {
-    // Obtiene el texto de entrada
-    var textoOriginal = document.getElementById("inputText").value;
-  
-    // Llamar a la función de encriptación
-    var textoEncriptado = encriptarSustitucion(textoOriginal);
-  
-    // Muestra el texto encriptado en el área de salida
-    document.getElementById("outputText").value = textoEncriptado;
+function procesar() {
+  var texto = document.getElementById('texto').value.toLowerCase();
+  var opcion = document.getElementById('opcion').value;
+  var resultado = '';
+
+  for (var i = 0; i < texto.length; i++) {
+      switch (texto[i]) {
+          case 'e':
+              resultado += 'enter';
+              break;
+          case 'i':
+              resultado += 'imes';
+              break;
+          case 'a':
+              resultado += 'ai';
+              break;
+          case 'o':
+              resultado += 'ober';
+              break;
+          case 'u':
+              resultado += 'ufat';
+              break;
+          default:
+              resultado += texto[i];
+      }
   }
-  
-  function encriptarSustitucion(texto) {
-    // Mapa de sustitución (puedes personalizarlo)
-    var sustitucionMapa = {
-      'a': 'z',
-      'b': 'y',
-      'c': 'x',
-      'd': 'w',
-      'e': 'v',
-      'f': 'u',
-      'g': 't',
-      'h': 's',
-      'i': 'r',
-      'j': 'q',
-      'k': 'p',
-      'l': 'o',
-      'm': 'n',
-      'n': 'm',
-      'o': 'l',
-      'p': 'k',
-      'q': 'j',
-      'r': 'i',
-      's': 'h',
-      't': 'g',
-      'u': 'f',
-      'v': 'e',
-      'w': 'd',
-      'x': 'c',
-      'y': 'b',
-      'z': 'a',
-      ' ': ' '
-      // Agrega más caracteres si es necesario
-    };
-  
-    // Convierte el texto a minúsculas para que sea insensible a mayúsculas/minúsculas
-    texto = texto.toLowerCase();
-  
-    // Aplica la sustitución de caracteres
-    var textoEncriptado = '';
-    for (var i = 0; i < texto.length; i++) {
-      var caracterOriginal = texto[i];
-      var caracterEncriptado = sustitucionMapa[caracterOriginal] || caracterOriginal;
-      textoEncriptado += caracterEncriptado;
-    }
-  
-    return textoEncriptado;
+
+  if (opcion === 'desencriptar') {
+      resultado = desencriptar(resultado);
   }
-  
+
+  document.getElementById('resultado').value = resultado;
+}
+
+function desencriptar(texto) {
+  return texto.replace(/enter/g, 'e')
+               .replace(/imes/g, 'i')
+               .replace(/ai/g, 'a')
+               .replace(/ober/g, 'o')
+               .replace(/ufat/g, 'u');
+}
+
+function copiarResultado() {
+  var resultado = document.getElementById('resultado');
+  resultado.select();
+  document.execCommand('copy');
+  alert('Texto copiado al portapapeles: ' + resultado.value);
+}
